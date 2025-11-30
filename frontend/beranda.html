@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Finance.io — Beranda</title>
+<link rel="stylesheet" href="styles.css" />
+<script src="script.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-inner">
+    <div class="brand-wrap">
+        <h1 class="brand">Finance.io</h1>
+        <p class="tag">Kelola Keuanganmu dengan Mudah</p>
+    </div>
+    <nav class="main-nav">
+        <button class="nav-btn active" data-view="home" onclick="location.href='beranda.html'">Beranda</button>
+        <button class="nav-btn" onclick="location.href='transaksi.html'">Transaksi</button>
+        <button class="nav-btn" onclick="location.href='laporan.html'">Laporan Keuangan</button>
+        <button id="logoutBtn" class="nav-btn secondary">Logout</button>
+    </nav>
+    </div>
+</header>
+
+<main class="main app-main">
+    <section class="app-view">
+    <div class="container">
+        <h2 class="page-title">Halo <span id="userName">User</span></h2>
+        <p class="lead">Selamat Datang di Finance.io</p>
+
+        <div class="cards-row">
+        <div class="stat-card">
+            <small>Pemasukan Bulanan</small>
+            <div class="stat-value" id="monthlyIncome">Rp 0</div>
+        </div>
+        <div class="stat-card mint">
+            <small>Target Akhir Bulan</small>
+            <div class="stat-value" id="monthlyTarget">Rp 0</div>
+        </div>
+        <div class="stat-card pink">
+            <small>Batasan Pengeluaran Harian</small>
+            <div class="stat-value" id="dailyLimit">Rp 0</div>
+        </div>
+        </div>
+
+        <div class="target-card">
+        <h3>Target Tabungan Bulan Ini</h3>
+        <div class="progress-wrap">
+            <div class="progress-bar" id="savingsBar"><div class="progress-fill" style="width:0%"></div></div>
+        </div>
+        <div class="target-stats">
+            <div>Sisa Saat Ini: <strong id="currentSavings">Rp 0</strong></div>
+            <div>Target: <strong id="targetAmount">Rp 0</strong></div>
+        </div>
+        <div id="targetMessage" class="target-message hidden">Selamat Anda Telah Mencapai Target Tabungan Bulan Ini!</div>
+        </div>
+    </div>
+    </section>
+</main>
+
+<footer class="site-footer"><div class="container">&nbsp;</div></footer>
+</body>
+</html>

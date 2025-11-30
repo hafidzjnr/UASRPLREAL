@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Finance.io — Masuk / Daftar</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="brand-wrap">
+                <h1 class="brand">Finance.io</h1>
+                <p class="tag">Kelola Keuanganmu dengan Mudah</p>
+            </div>
+            <nav class="main-nav">
+                <button class="nav-btn" onclick="location.href='beranda.html'">Beranda</button>
+                <button class="nav-btn" onclick="location.href='transaksi.html'">Transaksi</button>
+                <button class="nav-btn" onclick="location.href='laporan.html'">Laporan Keuangan</button>
+                <button id="logoutBtn" class="nav-btn secondary">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="card auth-card">
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form">
+                <h2 class="form-title">Masuk</h2>
+                <p class="form-sub">Kelola Keuanganmu dengan Mudah</p>
+
+                <label class="label">Email</label>
+                <input type="email" id="loginEmail" class="input" placeholder="contoh@email.com" required />
+
+                <label class="label">Kata Sandi</label>
+                <input type="password" id="loginPassword" class="input" placeholder="Kata sandi" required />
+
+                <button type="button" class="link-button small" id="forgotBtn">Lupa Kata Sandi?</button>
+
+                <button type="submit" class="primary-btn">Masuk</button>
+
+                <p class="muted">Belum Punya Akun? <button type="button" class="link-button" id="toSignup">Daftar Sekarang</button></p>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signupForm" class="auth-form hidden">
+                <h2 class="form-title">Daftar Akun Baru</h2>
+                <p class="form-sub">Kelola Keuanganmu dengan Mudah</p>
+
+                <label class="label">Nama Lengkap</label>
+                <input type="text" id="signupName" class="input" placeholder="Nama Lengkap" required />
+
+                <label class="label">Email</label>
+                <input type="email" id="signupEmail" class="input" placeholder="contoh@email.com" required />
+
+                <label class="label">Kata Sandi</label>
+                <input type="password" id="signupPassword" class="input" placeholder="Kata sandi" required />
+
+                <button type="submit" class="primary-btn">Daftar</button>
+
+                <p class="muted">Sudah Punya Akun? <button type="button" class="link-button" id="toLogin">Masuk di sini!</button></p>
+            </form>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">&nbsp;</div>
+    </footer>
+</body>
+</html>
+<!doctype html>
+        <header class="site-header">
+            <div class="container header-inner">
+                <div class="brand-wrap">
+                    <h1 class="brand">Finance.io</h1>
+                    <p class="tag">Kelola Keuanganmu dengan Mudah</p>
+                </div>
+                <nav id="mainNav" class="main-nav hidden">
+                    <button class="nav-btn active" data-view="home">Beranda</button>
+                    <button class="nav-btn" data-view="transaksi">Transaksi</button>
+                    <button class="nav-btn" data-view="laporan">Laporan Keuangan</button>
+                    <button id="logoutBtn" class="nav-btn secondary">Logout</button>
+                </nav>
+            </div>
+        </header>
+
+            <main class="main">
+                <div class="card auth-card">
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form">
+                    <h2 class="form-title">Masuk</h2>
+                    <p class="form-sub">Kelola Keuanganmu dengan Mudah</p>
+
+                    <label class="label">Email</label>
+                    <input type="email" id="loginEmail" class="input" placeholder="contoh@email.com" required />
+
+                    <label class="label">Kata Sandi</label>
+                    <input type="password" id="loginPassword" class="input" placeholder="Kata sandi" required />
+
+                    <button type="button" class="link-button small" id="forgotBtn">Lupa Kata Sandi?</button>
+
+                    <button type="submit" class="primary-btn">Masuk</button>
+
+                    <p class="muted">Belum Punya Akun? <button type="button" class="link-button" id="toSignup">Daftar Sekarang</button></p>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signupForm" class="auth-form hidden">
+                    <h2 class="form-title">Daftar Akun Baru</h2>
+                    <p class="form-sub">Kelola Keuanganmu dengan Mudah</p>
+
+                    <label class="label">Nama Lengkap</label>
+                    <input type="text" id="signupName" class="input" placeholder="Nama Lengkap" required />
+
+                    <label class="label">Email</label>
+                    <input type="email" id="signupEmail" class="input" placeholder="contoh@email.com" required />
+
+                    <label class="label">Kata Sandi</label>
+                    <input type="password" id="signupPassword" class="input" placeholder="Kata sandi" required />
+
+                    <button type="submit" class="primary-btn">Daftar</button>
+
+                    <p class="muted">Sudah Punya Akun? <button type="button" class="link-button" id="toLogin">Masuk di sini!</button></p>
+                </form>
+            </div>
+
+            <!-- Application views (hidden until login) -->
+            <section id="homeView" class="app-view hidden">
+                <div class="container">
+                    <h2 class="page-title">Halo <span id="userName">User</span></h2>
+                    <p class="lead">Selamat Datang di Finance.io</p>
+
+                    <div class="cards-row">
+                        <div class="stat-card">
+                            <small>Pemasukan Bulanan</small>
+                            <div class="stat-value" id="monthlyIncome">Rp 0</div>
+                        </div>
+                        <div class="stat-card mint">
+                            <small>Target Akhir Bulan</small>
+                            <div class="stat-value" id="monthlyTarget">Rp 0</div>
+                        </div>
+                        <div class="stat-card pink">
+                            <small>Batasan Pengeluaran Harian</small>
+                            <div class="stat-value" id="dailyLimit">Rp 0</div>
+                        </div>
+                    </div>
+
+                    <div class="target-card">
+                        <h3>Target Tabungan Bulan Ini</h3>
+                        <div class="progress-wrap">
+                            <div class="progress-bar" id="savingsBar"><div class="progress-fill" style="width:0%"></div></div>
+                        </div>
+                        <div class="target-stats">
+                            <div>Sisa Saat Ini: <strong id="currentSavings">Rp 0</strong></div>
+                            <div>Target: <strong id="targetAmount">Rp 0</strong></div>
+                        </div>
+                        <div id="targetMessage" class="target-message hidden">Selamat Anda Telah Mencapai Target Tabungan Bulan Ini!</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="transaksiView" class="app-view hidden">
+                <div class="container grid-2">
+                    <div class="card">
+                        <h3>Tambah Transaksi</h3>
+                        <form id="addTxnForm" class="txn-form">
+                            <label>Tipe Transaksi</label>
+                            <div class="radio-row">
+                                <label><input type="radio" name="type" value="income"> Pemasukan</label>
+                                <label><input type="radio" name="type" value="expense" checked> Pengeluaran</label>
+                            </div>
+
+                            <label>Jumlah (Rp)</label>
+                            <input type="number" id="txnAmount" class="input" value="0" min="0" />
+
+                            <label>Kategori</label>
+                            <select id="txnCategory" class="input">
+                                <option value="Makan">Makan</option>
+                                <option value="Transportasi">Transportasi</option>
+                                <option value="Hiburan">Hiburan</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+
+                            <label>Keterangan (Opsional)</label>
+                            <input type="text" id="txnNote" class="input" placeholder="Contoh: Makan Siang" />
+
+                            <button type="submit" class="primary-btn">+ Tambah Transaksi</button>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <h3>Riwayat Transaksi</h3>
+                        <div id="txnList" class="txn-list">
+                            <!-- items injected here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="laporanView" class="app-view hidden">
+                <div class="container report-wrap">
+                    <div class="card report-card">
+                        <h3>Laporan Pengeluaran</h3>
+                        <div class="charts">
+                            <canvas id="pieChart" width="400" height="300"></canvas>
+                            <canvas id="lineChart" width="400" height="300"></canvas>
+                        </div>
+                        <div class="legend" id="legendList"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">&nbsp;</div>
+        </footer>
+</html>

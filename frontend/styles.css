@@ -1,0 +1,99 @@
+:root{
+--green-500: #27ae60;
+--green-600: #219653;
+--mint: #e8fff6;
+--card-bg: #ffffff;
+--muted: #777;
+}
+*{box-sizing:border-box}
+body{
+	margin:0;
+	font-family: Inter, 'Segoe UI', Roboto, Arial, sans-serif;
+	background: #fafafa;
+	color:#111;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+}
+
+/* Header / Navbar */
+.site-header{
+	background: linear-gradient(180deg,var(--green-500), #10b981);
+	color: #fff;
+	padding:18px 0;
+}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 18px;display:flex;align-items:center;justify-content:space-between}
+.brand-wrap{display:flex;flex-direction:column}
+.site-header .brand{margin:0;font-weight:800;font-size:24px;letter-spacing:0.6px}
+.site-header .tag{margin:2px 0 0;opacity:.95;font-size:12px}
+
+.main-nav{display:flex;gap:12px;align-items:center}
+.nav-btn{background:transparent;border:0;color:#fff;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600}
+.nav-btn:hover{background:rgba(255,255,255,0.08)}
+.nav-btn.active{background:#ffffff;padding:8px 14px;border-radius:12px;color:var(--green-600);box-shadow:0 4px 10px rgba(16,24,32,0.12)}
+.nav-btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.12);padding:8px 12px;border-radius:8px}
+
+/* Page container */
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+.main{padding:28px 16px 60px}
+.app-main{max-width:1200px;margin:0 auto}
+
+/* Cards */
+.card{background:var(--card-bg);border-radius:12px;padding:22px;box-shadow:0 10px 24px rgba(14,20,30,0.08)}
+
+/* Auth / Forms */
+.auth-card{max-width:540px;margin:36px auto;padding:28px}
+.auth-form{display:flex;flex-direction:column;gap:12px}
+.form-title{margin:0;font-size:20px;text-align:center;font-weight:700}
+.form-sub{margin:0;text-align:center;color:var(--muted);font-size:13px}
+.label{font-weight:600;margin-top:6px}
+.input{appearance:none;border:0;background:var(--mint);padding:12px 14px;border-radius:10px;font-size:15px}
+.muted{font-size:12px;color:var(--muted);margin-top:8px}
+.link-button{background:none;border:0;color:var(--green-500);text-decoration:underline;cursor:pointer;padding:0;font-size:13px}
+.link-button.small{font-size:12px;text-decoration:none;color:#888;align-self:flex-start}
+.hidden{display:none}
+
+/* Home layout */
+.page-title{font-size:34px;margin:8px 0 4px}
+.lead{color:var(--muted);margin:0 0 18px}
+.cards-row{display:flex;gap:18px;margin-top:18px}
+.stat-card{flex:1;padding:22px;border-radius:12px;background:#fff}
+.stat-card small{color:#666}
+.stat-card.mint{background:var(--mint)}
+.stat-card.pink{background:#fdecec}
+.stat-value{font-weight:800;font-size:22px;margin-top:8px}
+
+.target-card{margin-top:20px;background:var(--mint);padding:20px;border-radius:12px}
+.progress-wrap{margin:12px 0}
+.progress-bar{height:12px;background:#e6f6ef;border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:var(--green-600);width:0}
+.target-stats{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
+.target-message{margin-top:12px;background:#dff6ea;padding:12px;border-radius:8px;color:var(--green-600);font-weight:700}
+
+/* Transactions */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.txn-form .radio-row{display:flex;gap:12px;margin-bottom:12px}
+.txn-list{display:flex;flex-direction:column;gap:12px}
+.txn-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f6f6f6;border-radius:10px}
+.txn-item .cat{font-weight:700}
+.txn-item .muted{color:#666}
+.txn-item.income{border-left:6px solid #10b981}
+.txn-item.expense{border-left:6px solid #ff4d4f}
+
+.primary-btn{margin-top:12px;background:var(--green-600);border:0;color:#fff;padding:14px;border-radius:10px;font-weight:700;font-size:16px;cursor:pointer}
+.primary-btn:hover{filter:brightness(.96)}
+
+/* Reports */
+.report-wrap{padding:12px}
+.report-card .charts{display:flex;gap:20px;align-items:flex-start}
+.report-card canvas{background:#fff;border-radius:8px}
+.legend{margin-top:14px;display:flex;gap:18px;align-items:center}
+.legend .legend-item{display:flex;gap:8px;align-items:center}
+.legend .swatch{width:18px;height:18px;border-radius:6px}
+
+/* Small screen */
+@media (max-width:900px){
+	.cards-row{flex-direction:column}
+	.grid-2{grid-template-columns:1fr}
+	.report-card .charts{flex-direction:column}
+}
+

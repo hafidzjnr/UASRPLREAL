@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Finance.io — Transaksi</title>
+<link rel="stylesheet" href="styles.css" />
+<script src="script.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-inner">
+    <div class="brand-wrap">
+        <h1 class="brand">Finance.io</h1>
+        <p class="tag">Kelola Keuanganmu dengan Mudah</p>
+    </div>
+    <nav class="main-nav">
+        <button class="nav-btn" onclick="location.href='beranda.html'">Beranda</button>
+        <button class="nav-btn active" onclick="location.href='transaksi.html'">Transaksi</button>
+        <button class="nav-btn" onclick="location.href='laporan.html'">Laporan Keuangan</button>
+        <button id="logoutBtn" class="nav-btn secondary">Logout</button>
+    </nav>
+    </div>
+</header>
+
+<main class="main app-main">
+    <div class="container grid-2">
+    <div class="card">
+        <h3>Tambah Transaksi</h3>
+        <form id="addTxnForm" class="txn-form">
+        <label>Tipe Transaksi</label>
+        <div class="radio-row">
+            <label><input type="radio" name="type" value="income"> Pemasukan</label>
+            <label><input type="radio" name="type" value="expense" checked> Pengeluaran</label>
+        </div>
+        <label>Jumlah (Rp)</label>
+        <input type="number" id="txnAmount" class="input" value="0" min="0" />
+        <label>Kategori</label>
+        <select id="txnCategory" class="input">
+            <option value="Makan">Makan</option>
+            <option value="Transportasi">Transportasi</option>
+            <option value="Hiburan">Hiburan</option>
+            <option value="Lainnya">Lainnya</option>
+        </select>
+        <label>Keterangan (Opsional)</label>
+        <input type="text" id="txnNote" class="input" placeholder="Contoh: Makan Siang" />
+        <button type="submit" class="primary-btn">+ Tambah Transaksi</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Riwayat Transaksi</h3>
+        <div id="txnList" class="txn-list"></div>
+    </div>
+    </div>
+</main>
+
+<footer class="site-footer"><div class="container">&nbsp;</div></footer>
+</body>
+</html>
