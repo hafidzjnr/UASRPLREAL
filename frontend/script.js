@@ -261,14 +261,18 @@ async function initTransaksi() {
             txns.forEach(t => {
                 const div = document.createElement('div');
                 div.className = 'txn-item ' + (t.type === 'income' ? 'income' : 'expense');
-                div.innerHTML = `
-                    <div>
-                        <div class="cat">${t.category}</div>
-                        <div class="note">${t.note || ''}</div>
-                        <small class="muted">${new Date(t.date).toLocaleString()}</small>
-                    </div>
-                    <div class="amount">${t.type === 'expense' ? '-' : ''}${formatRp(t.amount)}</div>
-                `;
+               // Kode PERBAIKAN (Ada Tombol Hapus):
+            div.innerHTML = `
+                <div style="flex:1">
+                <div class="cat">${t.category}</div>
+                <div class="note">${t.note || ''}</div>
+                <small class="muted">${new Date(t.date).toLocaleString()}</small>
+            </div>
+            <div style="text-align:right">
+                <div class="amount">${t.type === 'expense' ? '-' : ''}${formatRp(t.amount)}</div>
+                <button onclick="deleteTxn('${t._id}')" style="background:none; border:none; color:red; cursor:pointer; font-size:12px; margin-top:4px;">[Hapus]</button>
+            </div>
+        `;
                 list.appendChild(div);
             });
         } catch(err) { console.error(err); }
