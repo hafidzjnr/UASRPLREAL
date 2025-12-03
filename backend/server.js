@@ -25,5 +25,10 @@ app.use('/api/auth', authRoute); // <--- INI YANG DIPERBAIKI (Tadinya '/api/user
 app.use('/api/transactions', transactionRoute);
 app.use('/api/user', userRoute);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server berjalan di port ${PORT}`));
+
+module.exports = app;
+
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server berjalan di port ${PORT}`));
+}
