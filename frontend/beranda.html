@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Finance.io — Beranda</title>
 <link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="script.js" defer></script>
 </head>
 <body>
@@ -32,28 +33,49 @@
         <div class="cards-row">
         <div class="stat-card">
             <small>Pemasukan Bulanan</small>
+            <i class="fa-solid fa-wallet"></i>
             <div class="stat-value" id="monthlyIncome">Rp 0</div>
         </div>
         <div class="stat-card mint">
             <small>Target Akhir Bulan</small>
+            <i class="fa-solid fa-arrow-trend-up"></i>
             <div class="stat-value" id="monthlyTarget">Rp 0</div>
         </div>
         <div class="stat-card pink">
             <small>Batasan Pengeluaran Harian</small>
+            <i class="fa-solid fa-arrow-trend-down"></i>
             <div class="stat-value" id="dailyLimit">Rp 0</div>
         </div>
         </div>
 
-        <div class="target-card">
-        <h3>Target Tabungan Bulan Ini</h3>
+        <div class="target-card mint">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <i class="fa-solid fa-bullseye"></i>
+                <h3>Target Tabungan Bulan Ini</h3>
+                <i id="editTargetBtn" class="fa-solid fa-pen-to-square" style="cursor: pointer; color: #2c3e50; font-size: 1.2rem;" title="Edit Target"></i>
+            </div>
+        </div>
+        <small id="daysInfo" style="color:#0f5132;display:block;margin-bottom:8px">Sisa Hari Bulan Ini: 0/0</small>
         <div class="progress-wrap">
-            <div class="progress-bar" id="savingsBar"><div class="progress-fill" style="width:0%"></div></div>
+            <div class="progress-bar large" id="savingsBar">
+                <div class="progress-fill" style="width:0%"></div>
+            </div>
+            <div id="pctLabel" style="text-align:right;font-weight:800;margin-top:6px;color:#0f5132">0.0 %</div>
         </div>
-        <div class="target-stats">
-            <div>Sisa Saat Ini: <strong id="currentSavings">Rp 0</strong></div>
-            <div>Target: <strong id="targetAmount">Rp 0</strong></div>
+        <div class="target-stats" style="margin-top:12px;align-items:flex-start;display:flex;justify-content:space-between">
+            <div style="font-size:20px">Sisa Saat Ini: <strong id="currentSavings">Rp 0</strong></div>
+            <div style="text-align:right">Target<br><strong id="targetAmount">Rp 0</strong></div>
         </div>
-        <div id="targetMessage" class="target-message hidden">Selamat Anda Telah Mencapai Target Tabungan Bulan Ini!</div>
+        <div id="targetMessage" class="target-message hidden" style="margin-top:12px">Selamat Anda Telah Mencapai Target Tabungan Bulan Ini!</div>
+        <div class="target-controls" style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <label for="targetInput" style="font-weight:700">Atur Target Bulanan:</label>
+            <input id="targetInput" type="number" min="0" value="0" style="padding:8px;border-radius:8px;border:1px solid #ddd;width:160px" />
+            <label for="dailyInput" style="font-weight:700;margin-left:8px">Batasan Pengeluaran Harian:</label>
+            <input id="dailyInput" type="number" min="0" value="0" style="padding:8px;border-radius:8px;border:1px solid #ddd;width:120px" />
+            <button id="saveTargetBtn" class="primary-btn" style="padding:8px 12px;font-size:14px">Simpan</button>
+            <button id="resetTargetBtn" class="link-button" style="margin-left:6px">Reset</button>
+        </div>
         </div>
     </div>
     </section>

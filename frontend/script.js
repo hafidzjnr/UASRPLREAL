@@ -27,11 +27,24 @@ async function apiRequest(endpoint, method = 'GET', body = null) {
 
     try {
         const response = await fetch(`${API_URL}${endpoint}`, config);
-        const data = await response.json();
+
+        const contentType = response.headers.get('content-type') || '';
+        let data;
+
+        if (contentType.includes('application/json')) {
+            data = await response.json();
+        } else {
+            // Not JSON — read as text to show helpful error (often an HTML error page)
+            const text = await response.text();
+            const preview = text ? text.slice(0, 1000) : '';
+            throw new Error(`Expected JSON response but got ${response.status} ${response.statusText}: ${preview}`);
+        }
+
         if (!response.ok) throw new Error(data.message || data || 'Terjadi kesalahan');
         return data;
     } catch (err) {
         alert(err.message);
+        console.error('API request failed', endpoint, err);
         throw err;
     }
 }
@@ -94,7 +107,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         // Load Data sesuai Halaman
-        if (document.getElementById('monthlyIncome')) loadHomeStats();
+        if (document.getElementById('monthlyIncome')) {
+            loadHomeStats();
+            // setup target controls if present
+            setupTargetControls();
+        }
         if (document.getElementById('addTxnForm')) initTransaksi();
         if (document.getElementById('pieChart')) renderLaporan();
     }
@@ -110,25 +127,132 @@ async function loadHomeStats() {
         // Update UI
         document.getElementById('monthlyIncome').textContent = formatRp(income);
         
-        // Target & Limit (Masih Hardcoded untuk demo)
-        const target = 400000;
-        const dailyLimit = 20000;
-        const currentSavings = Math.max(0, income - expense);
+        // Target & Limit — ambil dari backend per-user (jika tersedia), fallback 0
+        let target = 0;
+        let dailyLimit = 0;
+        try {
+            const userSettings = await apiRequest('/user');
+            if (userSettings) {
+                target = Number.isFinite(Number(userSettings.monthlyTarget)) ? Number(userSettings.monthlyTarget) : 0;
+                dailyLimit = Number.isFinite(Number(userSettings.dailyLimit)) ? Number(userSettings.dailyLimit) : 0;
+            }
+        } catch (e) {
+            // ignore — tetap fallback ke 0
+            console.warn('Gagal ambil user settings, pakai default 0', e);
+        }
+        const currentSavings = income - expense; // allow negative balances to show correctly
 
         document.getElementById('monthlyTarget').textContent = formatRp(target);
         document.getElementById('dailyLimit').textContent = formatRp(dailyLimit);
         document.getElementById('currentSavings').textContent = formatRp(currentSavings);
         document.getElementById('targetAmount').textContent = formatRp(target);
         
-        const pct = Math.min(100, Math.round((currentSavings / target) * 100));
+        const pct = target > 0 ? Math.max(0, Math.min(100, Math.round((currentSavings / target) * 100))) : 0;
         document.querySelector('#savingsBar .progress-fill').style.width = pct + '%';
+        // update percent label
+        const pctLabel = document.getElementById('pctLabel');
+        if (pctLabel) pctLabel.textContent = `${pct.toFixed(1)} %`;
+
+        // days info
+        const now = new Date();
+        const totalDays = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+        const remaining = totalDays - now.getDate() + 1;
+        const daysInfo = document.getElementById('daysInfo');
+        if (daysInfo) daysInfo.textContent = `Sisa Hari Bulan Ini: ${remaining}/${totalDays}`;
+
+        // show message when reached
+        const msg = document.getElementById('targetMessage');
+        if (msg) {
+            if (target > 0 && currentSavings >= target) msg.classList.remove('hidden'); else msg.classList.add('hidden');
+        }
     } catch (err) { console.error(err); }
 }
+
+// Setup the target input controls on Beranda (if present)
+async function setupTargetControls() {
+    const input = document.getElementById('targetInput');
+    const dailyInput = document.getElementById('dailyInput');
+    const saveBtn = document.getElementById('saveTargetBtn');
+    const resetBtn = document.getElementById('resetTargetBtn');
+    if (!input || !saveBtn || !resetBtn) return;
+
+    // Initialize input value from storage (fallback 0)
+    // Initialize input values from backend (fallback 0)
+    try {
+        const userSettings = await apiRequest('/user');
+        const stored = Number.isFinite(Number(userSettings?.monthlyTarget)) ? Number(userSettings.monthlyTarget) : 0;
+        const storedDaily = Number.isFinite(Number(userSettings?.dailyLimit)) ? Number(userSettings.dailyLimit) : 0;
+        input.value = stored;
+        if (dailyInput) dailyInput.value = storedDaily;
+    } catch (err) {
+        input.value = 0;
+        if (dailyInput) dailyInput.value = 0;
+    }
+
+    saveBtn.addEventListener('click', async () => {
+        const v = Number(input.value) || 0;
+        const dv = dailyInput ? (Number(dailyInput.value) || 0) : 0;
+        try {
+            await apiRequest('/user', 'PUT', { monthlyTarget: v, dailyLimit: dv });
+            if (typeof loadHomeStats === 'function') loadHomeStats();
+        } catch (err) { console.error('Gagal simpan target ke server', err); alert('Gagal menyimpan target'); }
+    });
+
+    resetBtn.addEventListener('click', async () => {
+        try {
+            await apiRequest('/user', 'PUT', { monthlyTarget: 0, dailyLimit: 0 });
+            input.value = 0;
+            if (dailyInput) dailyInput.value = 0;
+            if (typeof loadHomeStats === 'function') loadHomeStats();
+        } catch (err) { console.error('Gagal reset target', err); alert('Gagal reset target'); }
+    });
+}
+
+// toggle edit controls when clicking pencil
+document.addEventListener('click', (e) => {
+    const el = e.target;
+    if (el && el.id === 'editTargetBtn') {
+        const controls = document.querySelector('.target-controls');
+        if (!controls) return;
+        if (controls.style.display === 'none' || getComputedStyle(controls).display === 'none') controls.style.display = 'flex'; else controls.style.display = 'none';
+    }
+});
 
 // === HALAMAN TRANSAKSI ===
 async function initTransaksi() {
     const list = document.getElementById('txnList');
     const form = document.getElementById('addTxnForm');
+
+    // untuk kategori dinamis
+    const categorySelect = document.getElementById('txnCategory');
+    const radioButtons = form.querySelectorAll('input[name="type"]');
+
+    const dataKategori = {
+        income: ["Gaji", "Bonus", "Hasil Usaha", "Investasi", "Lainnya"],
+        expense: ["Makan", "Transportasi", "Hiburan", "Tagihan & Listrik", "Belanja Bulanan", "Kesehatan", "Lainnya"]
+    };
+
+    function updateKategori (tipe){
+        categorySelect.innerHTML = "";
+        const daftar = dataKategori[tipe] || [];
+        daftar.forEach(item =>{
+            const option = document.createElement('option');
+            option.value = item;
+            option.textContent = item;
+            categorySelect.appendChild(option);
+        });
+    }
+
+    //event listener untuk radio button
+    radioButtons.forEach(radio =>{
+        radio.addEventListener('change', (e) =>{
+            updateKategori(e.target.value);
+        });
+    });
+
+    //set default saat halaman dimuat
+    const currentType =form.querySelector('input[name="type"]:checked').value;
+    updateKategori(currentType);
 
     async function renderList() {
         try {
@@ -211,7 +335,12 @@ async function renderLaporan() {
 }
 
 // Helper: Format Rupiah
-function formatRp(n) { return 'Rp ' + Number(n).toLocaleString('id-ID'); }
+function formatRp(n) {
+    const num = Number(n) || 0;
+    const sign = num < 0 ? '-' : '';
+    const abs = Math.abs(num);
+    return (sign ? '-' : '') + 'Rp ' + abs.toLocaleString('id-ID');
+}
 
 // Helper: Canvas Charts (Tetap sama, hanya dipisah agar rapi)
 function drawPie(canvas, dataMap) {

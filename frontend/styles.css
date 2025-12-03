@@ -65,13 +65,58 @@ body{
 .target-card{margin-top:20px;background:var(--mint);padding:20px;border-radius:12px}
 .progress-wrap{margin:12px 0}
 .progress-bar{height:12px;background:#e6f6ef;border-radius:10px;overflow:hidden}
+.progress-bar.large{height:16px}
 .progress-fill{height:100%;background:var(--green-600);width:0}
+.target-card.mint{background:linear-gradient(180deg,#e9fff6,#e8fff6);box-shadow:0 6px 18px rgba(16,24,32,0.06);padding:28px}
+.target-card.mint h3{margin:0;color:#064e3b}
+.target-card .link-button{color:#064e3b}
+.target-card .primary-btn{padding:8px 12px}
+.target-card .target-message{margin-top:12px;background:#dff6ea;padding:12px;border-radius:8px;color:var(--green-600);font-weight:700}
 .target-stats{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
 .target-message{margin-top:12px;background:#dff6ea;padding:12px;border-radius:8px;color:var(--green-600);font-weight:700}
 
 /* Transactions */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.txn-form .radio-row{display:flex;gap:12px;margin-bottom:12px}
+.txn-form {
+	display:flex;
+	flex-direction:column;
+	gap:12px;
+}
+
+.txn-form input{
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 14px;
+	outline: none;
+	transition: border-color 0.3s;
+}
+
+.txn-form input:focus{
+	border-color: var(--green-500);
+}
+
+.radio-row{
+	display: flex;
+	gap: 18px;
+	align-items: center;
+	margin-bottom: 5px;
+}
+
+.radio-row label{
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.txn-form > label{
+	font-weight: 700;
+	margin-top: 5px;
+	color: #333;
+}
+
 .txn-list{display:flex;flex-direction:column;gap:12px}
 .txn-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f6f6f6;border-radius:10px}
 .txn-item .cat{font-weight:700}
@@ -95,5 +140,79 @@ body{
 	.cards-row{flex-direction:column}
 	.grid-2{grid-template-columns:1fr}
 	.report-card .charts{flex-direction:column}
+}
+
+i.fa-solid {
+    vertical-align: middle;
+    transition: all 0.3s ease;
+}
+
+.stat-card {
+    position: relative;
+    overflow: hidden; /* Untuk efek dekoratif */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Style dasar icon di dalam kartu statistik */
+.stat-card i {
+    font-size: 2.5rem; 
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.2; 
+}
+
+/* Warna Icon: Dompet (Pemasukan) */
+.stat-card i.fa-wallet {
+    color: #27ae60;
+}
+
+/* Warna Icon: Target (Trend Up)  */
+.stat-card.mint i.fa-arrow-trend-up {
+    color: #2ecc71;
+    opacity: 0.3;
+}
+
+/* Warna Icon: Limit (Trend Down)  */
+.stat-card.pink i.fa-arrow-trend-down {
+    color: #e74c3c;
+    opacity: 0.3;
+}
+.card-header {
+		display: flex;
+		align-items: center;
+		width: 100%;
+}
+
+.card-header h3 {
+		margin: 0;
+		margin-left: 10px;
+		font-size: 1.1rem;
+}
+
+/* Icon Bullseye (Target) */
+.card-header i.fa-bullseye {
+    font-size: 1.8rem;
+    color: #27ae60; 
+    margin-right: 12px;
+    padding: 10px;
+}
+
+/* Icon Edit (Pensil) */
+#editTargetBtn {
+    color: #333!important; 
+    font-size: 1.2rem;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+		margin-left: auto;
+}
+
+/* Efek Hover untuk Tombol Edit */
+#editTargetBtn:hover {
+    color: #27ae60!important; /* Berubah jadi biru */
 }
 
